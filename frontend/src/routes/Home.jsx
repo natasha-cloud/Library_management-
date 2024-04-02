@@ -7,7 +7,7 @@ import Navlink from '../components/sidebar/Navlink'
 
 const Home = () => {
 
-  ManageMembers_dd = [
+ const  ManageMembers_dd = [
     {
       linktext: 'Members',
       link : '/members'
@@ -28,8 +28,8 @@ const Home = () => {
 
   const managemembers_list = ManageMembers_dd.map((list_item, index) =>{
     <li key={index}>
-      <Link to={ list_item.linktext }>
-      
+      <Link to={ list_item.link}>
+      { list_item.linktext }
       </Link>
     </li>
   })

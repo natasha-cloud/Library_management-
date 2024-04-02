@@ -6,7 +6,7 @@ import { useState } from 'react'
 const Navlink = ({ hasdropdown, linktext, link })=> {
 
 const [isopen , setisopen] = useState(false)
-console.log(greeting)
+
   const openNav = () => {
     setisopen( o => !o )
   }
