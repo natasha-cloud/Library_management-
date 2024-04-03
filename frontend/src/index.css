@@ -13,6 +13,17 @@ a{
     text-decoration: none;
 }
 
+i{
+    font-size: 1.25rem;
+    transition: 0.3s ease-in-out;
+}
+
+i:not(.bi-chevron-down, .bi-chevron-up):hover{
+    color: var(--light-blue);
+    font-size: 1.35rem;
+}
+
+
 :root {
     --lighter-blue: #021e49;
     --light-blue:#022f72;
@@ -26,13 +37,21 @@ a{
 
 
 #sidebar{
-    width:300px;
+    position: fixed;
+    z-index: 1000;
+    height: 100%;
+    transition: 0.3s ease-in-out;
+    width: 300px;
+    left:0;
     background-color:var(--lighter-blue);
     color: var(--gray);
-    position: fixed;
-    height: 100%;
-    transition: 0.5s;
 }
+
+#sidebar.active{
+    width: 300px;
+    left: 0;
+}
+
 
 #sidebar ul {
     padding: 0;
@@ -40,10 +59,15 @@ a{
 }
 
 #sidebar ul h1{
-  padding:16px;
+  padding:23.5px;
   margin: 0;
   background-color: var(--dark-blue);
 }
+
+#sidebar ul h1 span.close-btn{
+    display:none;
+}
+
 
 #sidebar a{
     color: var(--gray);
@@ -61,7 +85,7 @@ a{
 #sidebar ul li.nav-item:hover{
   border-right: 3px #ff9012 solid;
   background-color: var(--light-blue);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
 
 }
@@ -73,7 +97,6 @@ a{
 }
 
 #sidebar ul.nav-accordion{
-    transition: 0.4s ease-in-out;
     display: none;
 }
 
@@ -88,3 +111,89 @@ a{
     padding: 8px;
     padding-left: 40px;  
 }
+
+
+
+
+
+#topbar{
+   
+    padding: 8px 16px 8px 0;
+    box-shadow: 5px 5px 12px #e6e6e6;
+
+}
+
+
+
+
+
+@media (min-width: 991px) {
+    #main {
+        position: absolute;
+        min-height: 100vh;
+        width:calc(100% - 300px);
+        left: 300px;
+        background-color: var(--white);
+        transition: 0.3s;
+    }
+
+    #topbar span.menu-icon{
+        display:none;
+    }
+    
+    #topbar{
+        padding-left: 16px;
+    }
+
+}
+
+
+
+
+@media (max-width: 991px) {
+
+    
+    #sidebar.active{
+       width:300px;
+       transition: 0.3s ease-in-out;
+       left:0;
+    }
+
+    #sidebar{
+        left:-300px;
+      
+    }
+
+    #sidebar ul h1 span.close-btn{
+        display: block;
+    }
+
+    #topbar span.menu-icon{
+        display:block;
+    }
+
+    #sidebar ul h1 span.close-btn i:hover{
+        color: red;
+        cursor:pointer;
+    }
+    
+
+
+}
+
+@media(max-width:480px){
+
+    #sidebar{
+        left:-300px;
+        transition: 0.3s ease-in-out;
+    }
+    
+    #sidebar.active{
+        left:0;
+        width:100%;
+        transition: 0.3s ease-in-out;
+     }
+
+}
+
+ 
