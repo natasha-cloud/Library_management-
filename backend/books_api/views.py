@@ -14,7 +14,7 @@ class BookList(APIView):
 
     def get(self, request, format=None):
         books = Book.objects.all()
-        serializer = BookSerializer(books , many=True)
+        serializer = BookSerializer(books , many=True, context={'request':request})
         return Response(serializer.data)
 
 

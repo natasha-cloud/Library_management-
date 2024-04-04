@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import BookCard from '../components/BookCard'
-
+import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/sidebar/Sidebar'
 import TopNav from '../components/topnav/TopNav'
 
@@ -18,6 +16,7 @@ const Home = () => {
     <Sidebar sidebarActive={sidebarActive} togglesidebar={togglesidebar} />
     <div id="main" className={ ` ${ sidebarActive ? 'active' : '' } ` }>
         <TopNav togglesidebar={togglesidebar} />
+        <Outlet />
     </div>
     </>
   )

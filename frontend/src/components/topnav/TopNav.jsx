@@ -2,7 +2,7 @@ import React from 'react'
 
 const TopNav = ({ togglesidebar  }) => {
   return (
-    <nav id="topbar" className='d-flex justify-content-between py-3' >
+    <nav id="topbar" className='d-flex justify-content-between py-3 mb-3' >
     <div className="d-flex">
         <span className="menu-icon btn border-0 py-0">
             <i className='bi bi-list  me-3 fs-3' onClick={ togglesidebar } ></i>

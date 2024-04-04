@@ -16,7 +16,7 @@ const [isopen , setisopen] = useState(false)
     if(linkdata.length > 1){
         return (
             <>
-                <li  className='nav-item' onClick={ openNav }>
+                <li  className={`nav-item ${ isopen ? 'active' : '' }`} onClick={ openNav }>
                     { linktext}
                     <i className={ `bi ${ isopen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                 </li>

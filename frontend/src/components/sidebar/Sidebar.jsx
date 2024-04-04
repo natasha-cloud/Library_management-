@@ -22,8 +22,8 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
       ]
     const  book_management = [
         {
-          linktext: 'Books',
-          link : '/books'
+          linktext: 'Catalogue',
+          link : 'catalogue'
         },
         
         {
