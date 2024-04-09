@@ -58,7 +58,7 @@ class BookSearch(APIView):
         Search for a book by title, author or ISBN
     """
     def get(self, request, q,  format=None):
-        books = Book.objects.filter(Q(title__icontains=q) |Q(authors__name__icontains=q) | Q(copies__ISBN__icontains=q)| Q(id__icontains=q))
+        books = Book.objects.filter(Q(title__icontains=q) |Q(authors__name__icontains=q) | Q(copies__ISBN__icontains=q)| Q(id__icontains=q)).distinct()
         serializer = BookSerializer(books, context={'request': request}, many=True)
         return Response(serializer.data)
     
