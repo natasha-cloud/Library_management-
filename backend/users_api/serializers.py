@@ -4,7 +4,7 @@ from .models import Patron, MembershipCard
 
 
 class PatronSerializer(HyperlinkedModelSerializer):
-    full_name = CharField(source='get_full_name')
+    full_name = CharField(source='get_full_name', read_only=True)
     class Meta:
         model = Patron
         fields = [ 

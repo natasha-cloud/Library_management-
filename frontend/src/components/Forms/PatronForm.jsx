@@ -39,7 +39,7 @@ const PatronForm = () => {
                       onChange={handleFileChange}
                       className="d-none"
                       id="image-input"
-                      name="image"
+                      name="profile_image"
                     />
                     <span className="btn image-btn my-2 fw-bold">
                       Add profile image
@@ -101,7 +101,7 @@ const PatronForm = () => {
                     Cancel
                   </button>
                   <button className="btn rounded next" type="submit">
-                    Next
+                     Save
                   </button>
                 </div>
               </div>

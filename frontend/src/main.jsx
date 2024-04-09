@@ -14,7 +14,7 @@ import BookDetail from './routes/BookDetail.jsx'
 
 import { getbooks, getbook, getpatrons } from './loaders/loaders.jsx'
 import BookAddition from './routes/BookAddition.jsx'
-import { createBookAction } from './actions/Actions.jsx'
+import { createBookAction, createPatronAction } from './actions/Actions.jsx'
 import Patrons from './routes/Patrons.jsx'
 import PatronAddition from './routes/PatronAddition.jsx'
 
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
      {
       path: '/add/patron',
       element: <PatronAddition/>,
+      action: createPatronAction,
       }, 
       {
         path: '/catalogue',

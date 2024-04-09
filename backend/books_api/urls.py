@@ -6,6 +6,7 @@ urlpatterns = [
     path('api/',views.ApiList.as_view(), name='apis' ),
     path('api/books/', views.BookList.as_view(), name='book-list'),
     path('api/add/book/', views.CreateBook.as_view(), name='add-book'),
+    path('api/search/book/<str:q>/', views.BookSearch.as_view(), name='search-book'),
     path('api/book/<int:pk>/', views.BookDetail.as_view(), name='book-detail'),
     path('api/book_copy/<int:pk>/', views.BookCopyDetail.as_view(), name='bookcopy-detail'),
     path('api/book_author/<int:pk>/', views.AuthorDetail.as_view(), name='author-detail'),

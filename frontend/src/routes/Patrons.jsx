@@ -39,7 +39,7 @@ const Patrons = () => {
                 placeholder="Search patron name, email or id.........."
                 aria-label="Search title"
                 aria-describedby="search-icon-title"
-                defaultValue={name}
+                defaultValue={q}
                 onChange={(e) =>submit(e.currentTarget.form)}
               />
             </div>

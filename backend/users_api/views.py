@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from  django.http import Http404
 
@@ -37,6 +38,22 @@ class PatronDetail(APIView):
         patron = self.get_object(pk=pk)
         serializer = PatronSerializer(patron, context={'request': request})
         return Response(serializer.data)
+
+class PatronCreation(APIView):
+    """
+    Create a library Patron
+
+    """
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, fomat=None):
+        serializer = PatronSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+    
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class PatronSearch(APIView):
     """
@@ -44,7 +61,6 @@ class PatronSearch(APIView):
     """
 
     def get(self, request, q,  format=None):
-        print(q)
         patrons = Patron.objects.filter(Q(first_name__icontains=q) |Q(last_name__icontains=q) | Q(email__icontains=q)| Q(id__icontains=q))
         serializer = PatronSerializer(patrons, context={'request': request}, many=True)
         return Response(serializer.data)

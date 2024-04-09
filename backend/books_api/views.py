@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -20,7 +21,7 @@ class ApiList(APIView):
         return Response({
             'books': reverse('book-list', request=request, format=None),
             'book-series': reverse('bookseries-list', request=request, format=None),
-            'patrons' : reverse('patron-list', request=request, format=None),
+            'Books' : reverse('Book-list', request=request, format=None),
             
         })
     
@@ -49,6 +50,16 @@ class BookDetail(APIView):
     def get(self, request, pk,  format=None):
         book = self.get_object(pk=pk)
         serializer = BookSerializer(book, context={'request': request})
+        return Response(serializer.data)
+
+
+class BookSearch(APIView):
+    """
+        Search for a book by title, author or ISBN
+    """
+    def get(self, request, q,  format=None):
+        books = Book.objects.filter(Q(title__icontains=q) |Q(authors__name__icontains=q) | Q(copies__ISBN__icontains=q)| Q(id__icontains=q))
+        serializer = BookSerializer(books, context={'request': request}, many=True)
         return Response(serializer.data)
     
 

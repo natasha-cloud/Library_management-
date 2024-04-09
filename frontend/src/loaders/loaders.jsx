@@ -1,16 +1,25 @@
 import axios from 'axios'
 import { createRoutesFromChildren } from 'react-router-dom'
 
-export const getbooks = async  () => {
+export const getbooks = async  ({ request }) => {
+
+   const url = new URL(request.url)
+      const q = url.searchParams.get('q')
+      let books =[]
+
+      const endpoint = q ? `/api/search/book/${q}/` : '/api/books/';
+
+
     try{
-       const response = await axios.get('/api/books/')
-       return response.data
+       const response = await axios.get(endpoint)
+       books = response.data
+       
     } catch(error ) {
        console.log(error)
     }
    
  
-    return response
+    return { books , q }
  }
 
 
