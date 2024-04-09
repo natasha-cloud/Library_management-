@@ -20,6 +20,7 @@ class ApiList(APIView):
         return Response({
             'books': reverse('book-list', request=request, format=None),
             'book-series': reverse('bookseries-list', request=request, format=None),
+            'patrons' : reverse('patron-list', request=request, format=None),
             
         })
     
@@ -32,6 +33,7 @@ class BookList(APIView):
         books = Book.objects.all()
         serializer = BookSerializer(books , many=True, context={'request':request})
         return Response(serializer.data)
+    
 
 class BookDetail(APIView):
     """

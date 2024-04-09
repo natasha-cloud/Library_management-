@@ -1,13 +1,14 @@
 import uuid
 from django.db import models
 
-class Member(models.Model):
+class Patron(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     date_joined = models.DateField(auto_now_add=True)
+    last_updated = models.DateField(auto_now=True)
     profile_image = models.ImageField(upload_to='profile', default='blank-profile.png' )
 
     def get_full_name(self):
@@ -19,7 +20,7 @@ class Member(models.Model):
 
 class MembershipCard(models.Model):
     id = models.UUIDField(primary_key=True)
-    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='card')
+    patron = models.ForeignKey(Patron, on_delete=models.CASCADE, related_name='card')
     date_issued = models.DateField(auto_now=True)
     expiry_date = models.DateField()
 

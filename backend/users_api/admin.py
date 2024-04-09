@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import Member, MembershipCard
+from .models import  MembershipCard, Patron
 
 
-admin.site.register(Member)
+
+admin.site.register(Patron)
 admin.site.register(MembershipCard)
