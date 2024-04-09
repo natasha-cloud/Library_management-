@@ -8,7 +8,6 @@ import axios from 'axios'
 
 const Catalogue = () => {
    const result = useLoaderData()
-   console.log(result)
 
    const bookdivs = result.map(book => {
       return  <div key={book.id} className="col-6 col-sm-3 col-lg-2 ">
@@ -22,7 +21,7 @@ const Catalogue = () => {
     <div className='querydiv d-flex flex-wrap justify-content-between align-items-center mb-3'>
       <div className="header d-flex justify-content-between flex-grow-1">
         <h2>Catalogue</h2>
-        <span className="bookcount align-self-center rounded-pill border text-dark border-dark-subtle fw-bold px-1">123</span>
+        <span className="count align-self-center rounded-pill border text-dark border-dark-subtle fw-bold px-1">123</span>
       </div>
       <div className='filter row justify-content-lg-end align-items-center'>
          <div className="col-sm-4 my-2">
@@ -64,14 +63,3 @@ const Catalogue = () => {
 export default Catalogue
 
 
-export const getbooks = async  () => {
-   try{
-      const response = await axios.get('api/books/')
-      return response.data
-   } catch(error ) {
-      console.log(error)
-   }
-  
-
-   return response
-}

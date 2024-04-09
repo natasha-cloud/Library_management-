@@ -215,7 +215,7 @@ i:not(.bi-chevron-down, .bi-chevron-up):hover{
     
 }
 
-.querydiv .header .bookcount{
+.querydiv .header .count{
     background-color: var(--white);
 }
 
@@ -251,3 +251,27 @@ i:not(.bi-chevron-down, .bi-chevron-up):hover{
     color: var(--gray2);
 }
 
+/*============================ Book Details page styling==============================  */
+
+#book-details .book-info{
+    background-color: var(--lighter-blue);
+    color: var(--gray2);
+}
+/*============================ Book Form page styling==============================  */
+
+
+#book-form .cancel, #book-form .next , .image-btn {
+    background-color: var(--lighter-blue);
+    color:var(--gray);
+  
+    
+}
+#book-form .cancel:hover, #book-form .next:hover, .image-btn:hover {
+    background-color: var(--light-blue);
+    color:var(--gray)
+    
+    
+}
+#book-form .form-control, .form-select, .form-check-input{
+    border-color: var(--light-blue);
+}

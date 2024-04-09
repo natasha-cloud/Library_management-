@@ -5,13 +5,13 @@ import Navlink from './Navlink'
 const Sidebar = ({ sidebarActive, togglesidebar}) => {
     const  user_management = [
         {
-          linktext: 'Members',
-          link : '/members'
+          linktext: 'Patrons',
+          link : '/patrons'
         },
         
         {
-          linktext: 'Add members',
-          link : '/add/members'
+          linktext: 'Add patron',
+          link : '/add/patron'
         },
     
         {
@@ -23,7 +23,7 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
     const  book_management = [
         {
           linktext: 'Catalogue',
-          link : 'catalogue'
+          link : '/catalogue'
         },
         
         {
