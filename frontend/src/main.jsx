@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
@@ -12,11 +11,12 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import Catalogue from './routes/Catalogue.jsx'
 import BookDetail from './routes/BookDetail.jsx'
 
-import { getbooks, getbook, getpatrons } from './loaders/loaders.jsx'
+import { getbooks, getbook, getpatrons, getauthors } from './loaders/loaders.jsx'
 import BookAddition from './routes/BookAddition.jsx'
-import { createBookAction, createPatronAction } from './actions/Actions.jsx'
+import { createBookAction, createPatronAction, createAuthorAction } from './actions/Actions.jsx'
 import Patrons from './routes/Patrons.jsx'
 import PatronAddition from './routes/PatronAddition.jsx'
+import AuthorSelection from './routes/AuthorSelection.jsx'
 
 // Register swiper globally
 register()
@@ -52,6 +52,12 @@ const router = createBrowserRouter([
         path: '/add/book',
         element: <BookAddition/>,
         action: createBookAction
+     }, 
+      {
+        path: '/select_book/author',
+        element: <AuthorSelection/>,
+        loader: getauthors,
+        action: createAuthorAction,
      }, 
     ]
     

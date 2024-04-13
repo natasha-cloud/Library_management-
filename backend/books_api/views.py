@@ -21,7 +21,8 @@ class ApiList(APIView):
         return Response({
             'books': reverse('book-list', request=request, format=None),
             'book-series': reverse('bookseries-list', request=request, format=None),
-            'Books' : reverse('Book-list', request=request, format=None),
+            'patrons' : reverse('patron-list', request=request, format=None),
+            'authors' : reverse('author-list', request=request, format=None),
             
         })
     
@@ -51,6 +52,42 @@ class BookDetail(APIView):
         book = self.get_object(pk=pk)
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
+
+
+class AuthorList(APIView):
+    """
+        Returns a list of all authors
+    """
+
+    def get(self, request, format=None):
+        authors = Author.objects.all()
+        serializer = AuthorSerializer(authors , many=True, context={'request':request})
+        return Response(serializer.data)
+
+class AuthorSearch(APIView):
+    """
+        Search for author by name or by year
+    """
+
+    def get(self, request, q,  format=None):
+        authors = Author.objects.filter(Q(name__icontains=q)| Q(birth_year__icontains=q) | Q(death_year__icontains=q)).distinct()
+        serializer = AuthorSerializer(authors , many=True, context={'request':request})
+        return Response(serializer.data)
+
+class CreateAuthor(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+    
+    def post(self, request, format=None):
+        data = request.data
+        print(data)
+        serializer = AuthorSerializer(data=data, context={'request': request})
+        
+        if serializer.is_valid():
+            author = serializer.save()
+            print(type(author))
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class BookSearch(APIView):

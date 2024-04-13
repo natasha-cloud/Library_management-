@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import blankimg from "@/assets/images/blank-profile.png";
 import { Form } from "react-router-dom";
-const PatronForm = () => {
+import blankimg from "@/assets/images/blank-profile.png";
+
+const AuthorForm = () => {
   const [file, setfile] = useState();
 
   const handleFileChange = (e) => {
@@ -14,12 +15,12 @@ const PatronForm = () => {
   return (
     <div
       className="container-fluid d-flex justify-content-center "
-      id="patron-form"
+      id="author-form"
     >
       <div className="card mb-3 border p-3  rounded-end ">
         <Form action="" method="post" encType="multipart/form-data">
           <div className="card-body ">
-            <h2 className="card-title">Add Patron</h2>
+            <h2 className="card-title">Add Author</h2>
 
             <div className="row">
               <div className="col-sm-4 my-2">
@@ -29,7 +30,7 @@ const PatronForm = () => {
                       <div className="col-9">
                         <img
                           src={file ? file : blankimg}
-                          alt="Patron image"
+                          alt="Author image"
                           className="img-fluid"
                         />
                       </div>
@@ -39,69 +40,68 @@ const PatronForm = () => {
                       onChange={handleFileChange}
                       className="d-none"
                       id="image-input"
-                      name="profile_image"
+                      name="image"
                     />
                     <span className="btn image-btn my-2 fw-bold">
-                      Add profile image
+                      Add author image
                     </span>
                   </label>
                 </div>
               </div>
               <div className="col-sm-8 my-2 border rounded-end p-4">
                 <div className="col-md-6 my-2">
-                  <label htmlFor="first_name" className="form-label fw-bold">
-                    First name:
+                  <label htmlFor="author_name" className="form-label fw-bold">
+                    Author name:
                   </label>
                   <input
                     type="text"
                     placeholder="Enter first name"
                     className="form-control"
-                    name="first_name"
-                    id="first_name"
+                    name="name"
+                    id="author_name"
                   />
-                  </div>
+                </div>
                 <div className="col-md-6 my-2">
-                  <label htmlFor="last_name" className="form-label fw-bold">
-                    Last name:
+                  <label htmlFor="author_name" className="form-label fw-bold">
+                    Author age:
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter Last name"
+                    placeholder="Enter first name"
                     className="form-control"
-                    name="last_name"
-                    id="last_name"
+                    name="age"
+                    id="age"
                   />
                 </div>
                 <div className="col-md-6 my-2">
-                  <label htmlFor="email" className="form-label fw-bold">
-                    Email:
+                  <label htmlFor="birth_year" className="form-label fw-bold">
+                    Birth date:
                   </label>
                   <input
-                    type="email"
-                    placeholder="Enter email"
+                    type="date"
                     className="form-control"
-                    name="email"
-                    id="email"
+                    name="birth_year"
+                    id="birth_year"
                   />
                 </div>
                 <div className="col-md-6 my-2">
-                  <label htmlFor="phone_number" className="form-label fw-bold">
-                    Phone Number:
+                  <label htmlFor="Death_year" className="form-label fw-bold">
+                    Death date:
                   </label>
                   <input
-                    type="text"
-                    placeholder="Enter phone number"
+                    type="date"
                     className="form-control"
-                    name="phone_number"
-                    id="phone_number"
+                    name="death_year"
+                    id="death_year"
                   />
                 </div>
+
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                   <button className="btn rounded cancel" type="button">
                     Cancel
                   </button>
                   <button className="btn rounded next" type="submit">
-                     Save
+                    Save
                   </button>
                 </div>
               </div>
@@ -113,4 +113,4 @@ const PatronForm = () => {
   );
 };
 
-export default PatronForm;
+export default AuthorForm;

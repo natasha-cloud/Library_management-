@@ -34,6 +34,38 @@ i:not(.bi-chevron-down, .bi-chevron-up):hover{
     --black2: #999;
     --gray2: #e3e3e3;
 }
+/*==========================Loader css====================================*/
+@keyframes spin{
+    0% { transform:  rotate(0deg);}
+    100% {transform: rotate(100deg);}
+}
+
+.loader-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#loader{
+    border:16px solid #f3f3f3;
+    border-top: 16px solid var(--light-blue);
+    border-bottom: 16px solid var(--light-blue);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 1.1s linear infinite;
+}
+
+#search-loader{
+
+    border:4px solid #f3f3f3;
+    border-top: 4px solid  var(--light-blue);
+    border-bottom:4px solid var(--light-blue);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1.1s linear infinite;
+
+}
 
 
 #sidebar{
@@ -259,19 +291,19 @@ i:not(.bi-chevron-down, .bi-chevron-up):hover{
 }
 /*============================ Book Form page styling==============================  */
 
-
-#book-form .cancel, #book-form .next , .image-btn {
+.cancel, .next , .image-btn, .btn-plus {
     background-color: var(--lighter-blue);
     color:var(--gray);
   
     
 }
-#book-form .cancel:hover, #book-form .next:hover, .image-btn:hover {
+.cancel:hover, .next:hover, .image-btn:hover, .btn-plus:hover {
     background-color: var(--light-blue);
     color:var(--gray)
     
     
 }
-#book-form .form-control, .form-select, .form-check-input{
+ .form-control, .form-select, .form-check-input{
     border-color: var(--light-blue);
 }
+

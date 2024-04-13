@@ -1,4 +1,4 @@
-from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer , HyperlinkedRelatedField
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer , HyperlinkedRelatedField, CharField
 
 
 from books_api.models import Book, BookCopy ,Author, BookSeries, Genre, Category
@@ -17,7 +17,7 @@ class AuthorSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Author
         fields = [
-            'id', 'url', 'name', 'image' , 'series'
+            'id', 'url', 'name', 'image' , 'series', 'birth_year', 'death_year'
         ]
 
 class BookSerializer(HyperlinkedModelSerializer):

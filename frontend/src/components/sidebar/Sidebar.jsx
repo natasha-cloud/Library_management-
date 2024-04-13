@@ -63,7 +63,7 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
       
         <Navlink  linktext={'Manage members'} linkdata={ createNavlinks(user_management)} />
         <Navlink  linktext={'Manage books'} linkdata={createNavlinks(book_management)} />
-        <Navlink linktext='Issue book' link='/issue/book/today' />
+        <Navlink linktext='Manage authors' link='/select_book/author/' />
         <Navlink linktext='Issued book' link='/issued_book/' />
 
     </ul>

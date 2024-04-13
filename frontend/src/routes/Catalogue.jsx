@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { useLoaderData, useNavigation, Link, Form, useSubmit } from "react-router-dom";
+import { useLoaderData, useNavigation, Form, useSubmit } from "react-router-dom";
 
 import BookCard from "./../components/BookCard/BookCard";
 import Alphabet from "../components/sort and filter/Alphabet";
-import axios from "axios";
+
 
 const Catalogue = () => {
   const { books, q } = useLoaderData();
-  const submit = useSubmit()
 
+  const submit = useSubmit()
+  const navigation = useNavigation()
+  const searching = navigation.location && new URLSearchParams(navigation.location.search).has("q")
+  console.log(navigation)
   const bookdivs = books.map((book) => {
     return (
       <div key={book.id} className="col-6 col-sm-3 col-lg-2 ">
@@ -34,10 +37,13 @@ const Catalogue = () => {
         <div className="filter row justify-content-lg-end align-items-center flex-grow-1">
           <div className="col-sm-6 my-2">
             <div className="input-group flex-nowrap mx-2">
-              <i
-                className="bi bi-filter-right fw-bold input-group-text"
+              {searching ? <span className="fw-bold input-group-text"><span  id="search-loader"></span></span>  :
+                <i
+                className="bi bi-search fw-bold input-group-text"
                 id="search-icon-title"
               ></i>
+              }
+              
               <input
                 name="q"
                 id='book-search'
@@ -47,7 +53,9 @@ const Catalogue = () => {
                 placeholder="Search title.."
                 aria-label="Search title"
                 aria-describedby="search-icon-title"
-                onChange={(e) => submit(e.currentTarget.form)}
+                onChange={(e) => {
+                  const isFirstSearch = q == null;
+                  submit(e.currentTarget.form, {replace : !isFirstSearch,})}}
               />
             </div>
           </div>
@@ -70,7 +78,11 @@ const Catalogue = () => {
       </Form>
       {/*  End of querydiv */}
       <Alphabet />
-      <div className="row">{bookdivs}</div>
+      {navigation.state === 'loading' ? <div className="loader-container">
+              <div id="loader"></div>
+      </div>
+       : <div className="row">{bookdivs}</div>}
+      
     </div>
   );
 };

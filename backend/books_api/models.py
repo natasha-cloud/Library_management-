@@ -4,6 +4,13 @@ from django.db import models
 class Author(models.Model):
     name = models.CharField(max_length=40)
     image = models.ImageField(upload_to='authors' , default='blank-profile.png')
+    date_modified = models.DateTimeField(auto_now=True)
+    birth_year = models.DateField(blank=True, null=True)
+    death_year = models.DateField(blank=True, null=True)
+
+
+    class Meta:
+        ordering = ['-date_modified']
 
     def __str__(self):
         return self.name

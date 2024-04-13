@@ -8,12 +8,15 @@ const createBook = async (data) => {
         headers: {
             "Content-Type": "multipart/form-data"
         }
-       })
-        console.log(response)
-        return response.data
+       }
+         
+       )
+       return redirect('/select_book/author')
     } catch (error){
         console.log(error)
     }
+
+    
      
 }
 
@@ -32,12 +35,27 @@ const createPatron = async (data) => {
      
 }
 
+const createAuthor = async (data) => {
+    try{
+       const response =  await axios.post('/api/create/book/author/', data, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+       })
+        console.log(response)
+        return response.data
+    } catch (error){
+        console.log(error)
+    }
+     
+}
+
 export const createBookAction = async ({request}) =>{
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
     const response_data = createBook(data)
-   
     return redirect('/add/book')
+
 }
 
 export const createPatronAction = async ({request}) => {
@@ -46,3 +64,12 @@ export const createPatronAction = async ({request}) => {
     const response_data = createPatron(data)
     
 }
+
+export const createAuthorAction = async ({ request }) => {
+    const formData = await request.formData()
+    const data = Object.fromEntries(formData)
+    const response_data = createAuthor(data)
+    return redirect('/select_book/author')
+}
+
+
