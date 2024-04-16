@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
 import './index.css'
 import { register } from 'swiper/element/bundle'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -17,6 +18,9 @@ import { createBookAction, createPatronAction, createAuthorAction } from './acti
 import Patrons from './routes/Patrons.jsx'
 import PatronAddition from './routes/PatronAddition.jsx'
 import AuthorSelection from './routes/AuthorSelection.jsx'
+import IssueBook from './routes/IssueBook.jsx'
+
+
 
 // Register swiper globally
 register()
@@ -58,6 +62,17 @@ const router = createBrowserRouter([
         element: <AuthorSelection/>,
         loader: getauthors,
         action: createAuthorAction,
+     }, 
+      {
+        path: '/select_book/author/:new',
+        element: <AuthorSelection/>,
+        loader: getauthors,
+        action: createAuthorAction,
+     }, 
+      {
+        path: '/issue/book',
+        element: <IssueBook/>,
+        
      }, 
     ]
     

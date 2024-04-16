@@ -1,14 +1,8 @@
-import React, { useState } from 'react'
-
-const ControledCheck = ({genre}) => {
-
-    const [is_checked, setis_Checked] = useState(false)
-    const handlecheck = () => setis_Checked((c) => !c)
-    
+const ControledCheck = ({genre, togglecheck , checked }) => {
   return (
     <
       div className="form-check col-6 my-2" key={genre.id}>
-    <input type="checkbox" className="form-check-input"   name='genres' value={genre.url} id={ `check_${ genre.id}` }  checked={is_checked}  onChange={handlecheck} />
+    <input type="checkbox" className="form-check-input"    id={ `check_${ genre.id}` }  checked={checked} onChange={()=>togglecheck(genre.id)} />
     <label htmlFor={ `check_${ genre.id}`} className='form-check-label'  >{ genre.name}</label>
 </div>
   )

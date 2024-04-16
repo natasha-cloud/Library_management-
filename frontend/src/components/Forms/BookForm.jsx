@@ -5,38 +5,15 @@ import blankimg from "@/assets/images/image_not_found.jpg";
 import axios from "axios";
 
 import ControledCheck from "@/components/Forms/ControledCheck";
+import SelectAuthors from "../Selections/SelectAuthors";
 
 const BookForm = () => {
   const [file, setfile] = useState();
   const [bookCategories, setbookCategories] = useState([]);
-  const [genres, setGenre] = useState([]);
-  const [categorySelected, setcategorySelected] = useState(false);
-  const [genreChecks, setgenreChecks] = useState(new Array(0).fill(false));
+  const [selectedCategory, setSelectedCategory] = useState(new Object);
+  const [selectedGenres, setSelectedGenres] = useState([]);
 
-  const handleCategorySelect = (e) => {
-    const selected_category = bookCategories.filter(
-      (cat_obj) => cat_obj.url == e.target.value
-    );
-
-    console.log(selected_category[0].genres);
-    console.log(selected_category[0]);
-
-    const genredivs = selected_category[0].genres.map((genre) => {
-      return <ControledCheck key={genre.id} genre={genre} />;
-    });
-
-    console.log(genredivs.length);
-
-    setGenre(genredivs);
-    setcategorySelected(true);
-  };
-  const handleFileChange = (e) => {
-    setfile(URL.createObjectURL(e.target.files[0]));
-    e.target.files[0];
-
-    const input = document.getElementById("image-input");
-    console.log(input);
-  };
+  let genresdivs = []
 
   useEffect(() => {
     const getCategories = async () => {
@@ -51,6 +28,52 @@ const BookForm = () => {
     getCategories();
   }, []);
 
+  const handleCheck = (checkid) => {
+    setSelectedGenres((previous) => {
+      if(previous.includes(checkid)){
+        return previous.filter((genreid) => genreid != checkid)
+      } else {
+        return [...previous, checkid]
+      }
+    })
+  }
+
+
+  
+
+
+
+
+  const handleCategorySelect = (e) => { 
+    const selected_category = bookCategories.filter(
+      (cat_obj) => cat_obj.url == e.target.value
+    );
+      setSelectedCategory(selected_category[0])
+    };
+
+
+    
+if(selectedCategory.genres){
+  genresdivs = selectedCategory.genres.map(genre => <ControledCheck key={genre.id} genre={genre} togglecheck={ handleCheck } checked={selectedGenres.includes(genre.id)}/>)
+  
+}
+  
+
+  
+
+
+
+  const handleFileChange = (e) => {
+    setfile(URL.createObjectURL(e.target.files[0]));
+    e.target.files[0];
+
+    const input = document.getElementById("image-input");
+    console.log(input);
+  };
+
+
+ 
+
   const options = bookCategories.map((category) => {
     return (
       <option key={category.id} value={category.url}>
@@ -64,12 +87,13 @@ const BookForm = () => {
       className="container-fluid d-flex justify-content-center "
       id="book-form"
     >
+     <Form action="" method="post" encType="multipart/form-data">
       <div className="card mb-3 border p-3  rounded-end ">
-        <Form action="" method="post" encType="multipart/form-data">
           <div className="card-body ">
             <h2 className="card-title">Add Book</h2>
 
             <div className="row">
+              <input type="hidden" value={selectedGenres} name="genre_list"  />
               <div className="col-sm-4 my-2">
                 <div className="image-container border p-2">
                   <label htmlFor="image-input">
@@ -164,28 +188,20 @@ const BookForm = () => {
                   </select>
                 </div>
 
-                {categorySelected && (
+                {selectedCategory.genres && (
                   <div className="my-2">
                     <h6 className="fw-bold text-capitalised">
                       Select book genres
                     </h6>
-                    {genres}
+                    {genresdivs}
                   </div>
                 )}
-
-                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button className="btn rounded cancel" type="button">
-                    Cancel
-                  </button>
-                  <button className="btn rounded next" type="submit">
-                    Next
-                  </button>
-                </div>
               </div>
             </div>
           </div>
-        </Form>
       </div>
+        <SelectAuthors/>
+      </Form>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 from django.db import models
-
+import datetime
+from users_api.models import Patron
 
 class Author(models.Model):
     name = models.CharField(max_length=40)
@@ -60,6 +61,12 @@ class Book(models.Model):
     def is_available(self):
         return self.copies.filter(is_issued=False).count() > 0
     
+    def no_available(self):
+        return self.copies.filter(is_issued=False).count()
+    
+    def no_borrowed(self):
+        return self.copies.filter(is_issued=True).count()
+    
 class BookCopy(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='copies')
     ISBN = models.PositiveIntegerField()
@@ -70,4 +77,35 @@ class BookCopy(models.Model):
 
     def __str__(self):
         return self.book.title
+
+
+class Issue(models.Model):
+    BOOK_STATUS = [('R', 'Returned'), ('L', 'Lost')]
+    patron = models.ForeignKey(Patron, on_delete=models.CASCADE, related_name='check_out')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
+    check_out_date = models.DateTimeField(auto_now=True)
+    return_date = models.DateTimeField(blank=True, null=True) 
+    fine = models.CharField(max_length=10, default='$10')
+    paid = models.BooleanField('Fine paid', default=False)
+    book_status = models.CharField(max_length=20, choices=BOOK_STATUS)
+
+    def is_overdue(self):
+        return  datetime.now() > self.return_date 
+
+    def __str__(self):
+        return self.patron.name + ' issue of ' + self.book.title   
+
+class BookCirculationHistory(models.Model):
+    patron = models.ForeignKey(Patron, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
+    check_out_date = models.DateTimeField(auto_now=True)
+    return_date = models.DateTimeField(blank=True, null=True) 
+
+    def __str__(self):
+        return self.book.title + ' circulation of  ' + self.book_copy.id + ' copy'
+
+
+
     

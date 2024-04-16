@@ -105,13 +105,30 @@ class CreateBook(APIView):
 
     def post(self, request, format=None):
         data = request.data
+        genres = request.data.get('genre_list')
+        authors = request.data.get('author_list')
+        author_list = self.parseListString(authors)
+        genre_list = self.parseListString(genres)
         serializer = BookSerializer(data=data, context={'request': request})
         
         if serializer.is_valid():
-            serializer.save()
+            book = serializer.save()
+            for genre_id in genre_list:
+                book.genres.add(Genre.objects.get(id=genre_id))
+                book.save()
+            for author_id in author_list:
+                book.authors.add(Author.objects.get(id=author_id))
+                book.save()
+
+            
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    def parseListString(self, genre_str):
+        genre_list = genre_str.split(',')
+        return genre_list 
     
 class BookCopyDetail(APIView):
     """

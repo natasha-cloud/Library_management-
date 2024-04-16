@@ -16,7 +16,18 @@ const AuthorSelection = () => {
     navigation.location &&
     new URLSearchParams(navigation.location.search).has("q");
 
+
+
   const [newAuthor, setNewAuthor] = useState(false);
+
+  useEffect(()=>{
+    if(location.pathname.indexOf('new') > -1){
+      setNewAuthor(true)
+    }
+  }, [])
+
+
+ 
 
   const handleclick = () => setNewAuthor((n) => !n);
 
@@ -30,7 +41,7 @@ const AuthorSelection = () => {
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-center align-items-center "
+        className={`container-fluid d-flex justify-content-center align-items-center ${location.pathname.indexOf('new') > -1 ? 'd-none': ''} `}
         id="author-selection"
       >
         <div className="card mb-3 border   rounded-end w-75 ">

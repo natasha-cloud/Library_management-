@@ -14,11 +14,6 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
           link : '/add/patron'
         },
     
-        {
-          linktext: 'Fines',
-          link : '/fines'
-        },
-    
       ]
     const  book_management = [
         {
@@ -29,11 +24,6 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
         {
           linktext: 'Add Book',
           link : '/add/book'
-        },
-    
-        {
-          linktext: 'Issue book',
-          link : '/issue'
         },
     
       ]
@@ -64,7 +54,7 @@ const Sidebar = ({ sidebarActive, togglesidebar}) => {
         <Navlink  linktext={'Manage members'} linkdata={ createNavlinks(user_management)} />
         <Navlink  linktext={'Manage books'} linkdata={createNavlinks(book_management)} />
         <Navlink linktext='Manage authors' link='/select_book/author/' />
-        <Navlink linktext='Issued book' link='/issued_book/' />
+        <Navlink linktext='Manage book Issue' link='/issue/book/' />
 
     </ul>
    </nav>

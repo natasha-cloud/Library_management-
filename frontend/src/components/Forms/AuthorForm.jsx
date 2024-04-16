@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import blankimg from "@/assets/images/blank-profile.png";
 
 const AuthorForm = () => {
   const [file, setfile] = useState();
+  const navigate = useNavigate()
 
   const handleFileChange = (e) => {
     setfile(URL.createObjectURL(e.target.files[0]));
@@ -62,18 +63,6 @@ const AuthorForm = () => {
                   />
                 </div>
                 <div className="col-md-6 my-2">
-                  <label htmlFor="author_name" className="form-label fw-bold">
-                    Author age:
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter first name"
-                    className="form-control"
-                    name="age"
-                    id="age"
-                  />
-                </div>
-                <div className="col-md-6 my-2">
                   <label htmlFor="birth_year" className="form-label fw-bold">
                     Birth date:
                   </label>
@@ -85,7 +74,7 @@ const AuthorForm = () => {
                   />
                 </div>
                 <div className="col-md-6 my-2">
-                  <label htmlFor="Death_year" className="form-label fw-bold">
+                  <label htmlFor="death_year" className="form-label fw-bold">
                     Death date:
                   </label>
                   <input
@@ -97,7 +86,7 @@ const AuthorForm = () => {
                 </div>
 
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button className="btn rounded cancel" type="button">
+                  <button className="btn rounded cancel" type="button" onClick={()=> navigate(-1)}>
                     Cancel
                   </button>
                   <button className="btn rounded next" type="submit">
