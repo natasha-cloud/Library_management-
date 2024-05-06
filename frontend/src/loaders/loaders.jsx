@@ -80,3 +80,16 @@ export const getbooks = async  ({ request }) => {
 
    return { authors, q }
 }
+
+
+export const getIssues = async () => {
+   let issues = []
+   try{
+      const response = await axios.get('/api/book_issues/expanded')
+      issues = response.data
+   } catch(errors){
+      console.log(errors)
+   }
+
+   return issues
+}

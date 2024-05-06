@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link, Form } from "react-router-dom";
 import axios from "axios";
 
-const BookSelection = () => {
+const BookSelection = ({onSelect}) => {
   const [books, setBooks] = useState([]);
   const [q, setQ] = useState("");
-  const [slectedBook, setSelectedBook] = useState('')
+  const [selectedBook, setSelectedBook] = useState('')
+ 
 
   useEffect(() => {
     const getallbooks = async () => {
       const response = await axios.get("/api/books/");
-      console.log(response);
       setBooks(response.data);
     };
     getallbooks();
-  }, [books]);
+  }, []);
 
   const search = (books) => {
     return books.filter((book) => {
@@ -28,7 +28,7 @@ const BookSelection = () => {
     <div className="card border p-3 rounded-end">
       <div className="card-body">
         <h4>Select book</h4>
-        <input type="text" name='book' value={slectedBook} />
+      
         <div className="d-flex justify-content-between my-2 flex-wrap ">
           <input
             type="search"
@@ -38,7 +38,7 @@ const BookSelection = () => {
             onChange={(e) => setQ(e.target.value)}
           />
 
-          <Link to="/select_book/book/new">
+          <Link to="/add/book">
             <button className="fw-bold btn next rounded my-2">
               {" "}
               New <i className="bi bi-plus"></i>{" "}
@@ -62,8 +62,12 @@ const BookSelection = () => {
                     id={book.id}
                     name='book'
                     value={book.id}
-                    checked={book.id == slectedBook}
-                    onChange={(e) => setSelectedBook(e.target.value)}
+                    checked={book.id == selectedBook}
+                    onChange={(e) => {
+                      setSelectedBook(e.target.value)
+                      onSelect(book.id)
+
+                    }}
                   />
                   <label htmlFor={book.id} className="form-check-label">
                     <div className="mx-2 d-flex flex-nowrap">

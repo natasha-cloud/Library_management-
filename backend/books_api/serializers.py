@@ -1,12 +1,13 @@
-from rest_framework.serializers import HyperlinkedModelSerializer , BooleanField , HyperlinkedRelatedField, CharField
+from rest_framework.serializers import HyperlinkedModelSerializer , BooleanField , HyperlinkedRelatedField, CharField, ModelSerializer
 
 
-from books_api.models import Book, BookCopy ,Author, BookSeries, Genre, Category
-
+from books_api.models import Book, BookCopy ,Author, BookSeries, Genre, Category, Issue, BookCirculationHistory
+from users_api.serializers import PatronSerializer
 
 class BookCopySerializer(HyperlinkedModelSerializer):
     class Meta:
         model = BookCopy
+        depth = 1
         fields = [
             'id', 'url', 'book', 'ISBN', 'is_issued'
         ]
@@ -64,6 +65,20 @@ class BookSeriesSerializer(HyperlinkedModelSerializer):
             'id','url','title', 'author', 'series_books'
         ]
 
+class IssueSerializer(ModelSerializer):
+    class Meta:
+        model = Issue
+        fields = '__all__'
+
+class IssueSerializerExpanded(HyperlinkedModelSerializer):
+    patron = PatronSerializer()
+    is_book_overdue = CharField(source='is_overdue', read_only=True)
+    class Meta:
+        model = Issue
+        fields = [
+            'id','url', 'patron', 'book', 'book_copy', 'check_out_date', 'return_date',
+            'fine', 'paid', 'book_status', 'is_book_overdue'
+        ]
 
 
 

@@ -80,21 +80,24 @@ class BookCopy(models.Model):
 
 
 class Issue(models.Model):
-    BOOK_STATUS = [('R', 'Returned'), ('L', 'Lost')]
+    BOOK_STATUS = [('R', 'Returned'), ('L', 'Lost'),  ('I', 'Issued')]
     patron = models.ForeignKey(Patron, on_delete=models.CASCADE, related_name='check_out')
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
-    check_out_date = models.DateTimeField(auto_now=True)
-    return_date = models.DateTimeField(blank=True, null=True) 
+    check_out_date = models.DateField(auto_now=True)
+    check_in_date = models.DateField(blank=True, null=True)
+    return_date = models.DateField(blank=True, null=True) 
     fine = models.CharField(max_length=10, default='$10')
     paid = models.BooleanField('Fine paid', default=False)
-    book_status = models.CharField(max_length=20, choices=BOOK_STATUS)
+    book_status = models.CharField(max_length=20, choices=BOOK_STATUS, default='I')
 
-    def is_overdue(self):
-        return  datetime.now() > self.return_date 
+    # def is_overdue(self):
+    #     return  datetime.datetime.date(datetime.datetime.now()) > self.return_date 
 
     def __str__(self):
-        return self.patron.name + ' issue of ' + self.book.title   
+        return self.patron.first_name + ' issue of ' + self.book.title   
+    
+    
 
 class BookCirculationHistory(models.Model):
     patron = models.ForeignKey(Patron, on_delete=models.CASCADE)

@@ -12,9 +12,9 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import Catalogue from './routes/Catalogue.jsx'
 import BookDetail from './routes/BookDetail.jsx'
 
-import { getbooks, getbook, getpatrons, getauthors } from './loaders/loaders.jsx'
+import { getbooks, getbook, getpatrons, getauthors, getIssues } from './loaders/loaders.jsx'
 import BookAddition from './routes/BookAddition.jsx'
-import { createBookAction, createPatronAction, createAuthorAction } from './actions/Actions.jsx'
+import { createBookAction, createPatronAction, createAuthorAction, createBookIssue } from './actions/Actions.jsx'
 import Patrons from './routes/Patrons.jsx'
 import PatronAddition from './routes/PatronAddition.jsx'
 import AuthorSelection from './routes/AuthorSelection.jsx'
@@ -72,6 +72,8 @@ const router = createBrowserRouter([
       {
         path: '/issue/book',
         element: <IssueBook/>,
+        action: createBookIssue,
+        loader: getIssues,
         
      }, 
     ]

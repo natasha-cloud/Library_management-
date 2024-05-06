@@ -7,8 +7,16 @@ from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
-from books_api.serializers import BookSerializer, BookCopySerializer, BookSeriesSerializer, AuthorSerializer, CategorySerializer,  GenreSerializer
-from .models import Book, BookCopy, BookSeries,Author, Genre, Category
+from books_api.serializers import (BookSerializer,
+                                    BookCopySerializer,
+                                    BookSeriesSerializer,
+                                    AuthorSerializer,
+                                    CategorySerializer,
+                                    GenreSerializer,
+                                    IssueSerializer,
+                                    IssueSerializerExpanded, 
+                                    )
+from .models import Book, BookCopy, BookSeries,Author, Genre, Category, Issue, BookCirculationHistory
 
 
 
@@ -130,6 +138,23 @@ class CreateBook(APIView):
         genre_list = genre_str.split(',')
         return genre_list 
     
+class BookCopies(APIView):
+    """
+        Returns the   book copies for a particular book
+    """
+
+    def get_book(self, pk):
+        try:
+            return Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk,  format=None):
+        book = self.get_book(pk=pk)
+        book_copies = BookCopy.objects.filter(book=book, is_issued=False)
+        serializer = BookCopySerializer(book_copies, many=True, context={'request': request})
+        return Response(serializer.data)
+    
 class BookCopyDetail(APIView):
     """
         Returns the details of a single book copy
@@ -142,8 +167,8 @@ class BookCopyDetail(APIView):
             raise Http404
 
     def get(self, request, pk,  format=None):
-        book = self.get_object(pk=pk)
-        serializer = BookCopySerializer(book, context={'request': request})
+        book_copy = self.get_object(pk=pk)
+        serializer = BookCopySerializer(book_copy, context={'request': request})
         return Response(serializer.data)
     
 class BookSeriesList(APIView):
@@ -231,8 +256,64 @@ class CategoryList(APIView):
         serializer = CategorySerializer(categories, many=True, context={'request':request})
         return Response(serializer.data)
 
+class IssueList(APIView):
+    """
+    Returns a list of all book issues
 
-        
+    """
+
+    def get(self, request, format=None):
+        book_issues = Issue.objects.all()
+        serializer = IssueSerializer(book_issues, many=True)
+        return Response(serializer.data)
     
- 
 
+class IssueDetail(APIView):
+    """
+        Returns the details of a single book issue
+    """
+
+    def get_object(self, pk):
+        try:
+            return Issue.objects.get(pk=pk)
+        except Issue.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk,  format=None):
+        issue = self.get_object(pk=pk)
+        serializer = IssueSerializerExpanded(issue, context={'request': request})
+        return Response(serializer.data)
+    
+
+class IssueListExpanded(APIView):
+    """
+    Returns a list of all book issues
+
+    """
+
+    def get(self, request, format=None):
+        book_issues = Issue.objects.all()
+        serializer = IssueSerializerExpanded(book_issues, many=True, context={'request': request})
+        return Response(serializer.data)
+    
+class CreateBookIssue(APIView):
+    """
+        Create book Issue
+    
+    """
+
+    def post(self, request, format=None):
+        data = request.data
+        print(data)
+        serializer = IssueSerializer(data=data)
+        if serializer.is_valid():
+            self.updateBookCopy(data.get('book_copy'))
+            serializer.save()
+            return Response({'errors': serializer.errors}, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def updateBookCopy(self, copy_id):
+        book_copy = BookCopy.objects.get(id=copy_id)
+        book_copy.is_issued = True
+        book_copy.save()

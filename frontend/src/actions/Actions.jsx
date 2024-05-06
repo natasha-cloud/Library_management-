@@ -50,10 +50,15 @@ const createAuthor = async (data) => {
      
 }
 
+
+
 export const createBookAction = async ({request}) =>{
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
-    const response_data = createBook(data)
+    const errors = createBook(data)
+    if(errors){
+        return errors
+    }
     return redirect('/add/book')
 
 }
@@ -70,6 +75,23 @@ export const createAuthorAction = async ({ request }) => {
     const data = Object.fromEntries(formData)
     const response_data = createAuthor(data)
     return redirect('/select_book/author')
+}
+
+const issuebook =   async (data) => {
+    try{
+        await axios.post('/api/issue/book/', data)
+        return {success : {message: 'Issue recorded successfully'} }
+    } catch (error){
+       return error
+    }
+     
+}
+
+export const createBookIssue = async ({ request }) => {
+    const formData = await request.formData()
+    const data = Object.fromEntries(formData)
+    const response_data = await issuebook(data)
+    return  response_data 
 }
 
 

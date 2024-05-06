@@ -7,13 +7,13 @@ const SelectAuthors = () => {
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [q, setQ] = useState("");
   const [authors, setAuthors] = useState([]);
-  const navigate = useNavigate()
-
- 
+  const navigate = useNavigate();
 
   const search = (authors) => {
     return authors.filter((author) => {
-      return  author['name'].toString().toLowerCase().indexOf(q.toLowerCase()) > -1;
+      return (
+        author["name"].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+      );
     });
   };
 
@@ -32,24 +32,20 @@ const SelectAuthors = () => {
 
   const handleCheck = (checkid) => {
     setSelectedAuthors((previous) => {
-      if(previous.includes(checkid)){
-        return previous.filter((genreid) => genreid != checkid)
+      if (previous.includes(checkid)) {
+        return previous.filter((genreid) => genreid != checkid);
       } else {
-        return [...previous, checkid]
+        return [...previous, checkid];
       }
-    })
-  }
-
-
-  
+    });
+  };
 
   return (
     <div className="card border p-3 rounded-end">
       <div className="card-body">
-        
         <h4>Author details</h4>
 
-        <input type="hidden" name='author_list' value={selectedAuthors} />
+        <input type="hidden" name="author_list" value={selectedAuthors} />
         <div className="d-flex justify-content-between my-2 flex-wrap ">
           <input
             type="search"
@@ -58,7 +54,7 @@ const SelectAuthors = () => {
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-          
+
           <Link to="/select_book/author/new">
             <button className="fw-bold btn next rounded my-2">
               {" "}
@@ -70,8 +66,11 @@ const SelectAuthors = () => {
         <h6 className="my-2">Select book authors</h6>
 
         <div className="my-3 list">
-          <ul className="list-group" style={{maxHeight:'400px', overflow:'auto'}}>
-            { search(authors).map((author) => {
+          <ul
+            className="list-group"
+            style={{ maxHeight: "400px", overflow: "auto" }}
+          >
+            {search(authors).map((author) => {
               const birth_year = author.birth_year
                 ? new Date(author.birth_year).getFullYear()
                 : "****";
@@ -85,8 +84,8 @@ const SelectAuthors = () => {
                     type="checkbox"
                     className="form-check-input me-1"
                     id={author.id}
-                    checked = {selectedAuthors.includes(author.id)}
-                    onChange={()=>handleCheck(author.id)}
+                    checked={selectedAuthors.includes(author.id)}
+                    onChange={() => handleCheck(author.id)}
                   />
                   <label htmlFor={author.id} className="form-check-label">
                     <div className="mx-2 d-flex flex-nowrap">
@@ -111,15 +110,19 @@ const SelectAuthors = () => {
           </ul>
         </div>
         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <Link >
-                  <button className="btn rounded cancel" type="button" onClick={()=> navigate(-1)}>
-                    Cancel
-                  </button>
-                  </Link>
-                  <button className="btn rounded next" type="submit">
-                   Save
-                  </button>
-                </div>
+          <Link>
+            <button
+              className="btn rounded cancel"
+              type="button"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </button>
+          </Link>
+          <button className="btn rounded next" type="submit">
+            Save
+          </button>
+        </div>
       </div>
     </div>
   );

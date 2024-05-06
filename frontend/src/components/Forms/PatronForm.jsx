@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import blankimg from "@/assets/images/blank-profile.png";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 const PatronForm = () => {
   const [file, setfile] = useState();
+  const navigate = useNavigate()
 
   const handleFileChange = (e) => {
     setfile(URL.createObjectURL(e.target.files[0]));
@@ -97,7 +98,7 @@ const PatronForm = () => {
                   />
                 </div>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button className="btn rounded cancel" type="button">
+                  <button className="btn rounded cancel" type="button" onClick={ ()=> navigate(-1)}>
                     Cancel
                   </button>
                   <button className="btn rounded next" type="submit">
