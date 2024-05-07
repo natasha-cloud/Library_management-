@@ -1,22 +1,8 @@
-# there are two ways to deploy a react django website
-1. Deploying the frontend and backend to different servers
-2. Making the backend host the frontend then deploying it to a single server.
+# React + Vite
 
-# Installing all requied packages
-Create a virtual environment
-cd into the backend
-run pip install -r requirements.txt
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-DEPLOYING TO DIFFERENT SERVERS
-First activate the backend before the frontend
+Currently, two official plugins are available:
 
-# Activate the backend
-To activate the backend
-Step 1: run your virtual environment
-Step 2: cd to the backend
-Step 3: run py manage.py runserver 
-
-# Activate the frontend
-To activate the frontend, 
-Step 1: cd to the frontend
-Step2: npm run dev 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
